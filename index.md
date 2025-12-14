@@ -6,5 +6,5 @@ Welcome, and feel free to browse, learn, or even reach out!
 
 
 
-# Posts
-- [go to posts](posts)
+# Sections
+- [Sicp book](sicp)
