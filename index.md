@@ -1,4 +1,4 @@
-[about me](./about)
+[about me](./about.md)
 
 
 # Posts
