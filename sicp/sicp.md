@@ -7,3 +7,5 @@ Recursion used to be scary for me, but after reading SICP, I realized it's just 
   (if (= n 0)
       1
       (* n (fact (- n 1)))))
+```
+
