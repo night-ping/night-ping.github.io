@@ -7,4 +7,4 @@ Welcome, and feel free to browse, learn, or even reach out!
 
 
 # Sections
-- [study of Sicp book](sicp)
+- [studying Sicp book](sicp)
