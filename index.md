@@ -1,2 +1,2 @@
 # Posts
-- [go to posts](./posts)
+- [go to posts](./posts/)
