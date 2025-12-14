@@ -1,3 +1,3 @@
 
 # Posts
-- [test file](./test.md)
+- [test file](./test)
