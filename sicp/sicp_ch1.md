@@ -271,15 +271,19 @@ example: square root procedure :
 
 - what is ? -> 
   
-  ![](/home/nightping/techBlog/assets/sqrt.png)
+  
+  
+  ![](../assets/sqrt.png)
   
   is describes a perfectly legitimate mathematical function. On the other hand, the definition does not describe a procedure.
 
 - how to ? -> 
   
-  the most common way is to use Newton’s method of successive approximations, which says that whenever we have a guess $y$ for the value of the square root of a number $x$ , we can perform a simple manipulation to get a beer guess (one closer to the actual square root) by averaging $y$ with $x/y$.
-
-Now let’s formalize the process in terms of procedures. We start with a value for the **radicand** (the number whose square root we are trying to compute) and a value for the guess. If the guess is good enough for our purposes, we are done; if not, we must repeat the process with an improved guess.
+  the most common way is to use Newton’s method of successive approximations, which says that whenever we have a guess y for the value of the square root of a number x , we can perform a simple manipulation to get a beer guess (one closer to the actual square root) by averaging y with x/y.
+  
+  
+  
+  Now let’s formalize the process in terms of procedures. We start with a value for the **radicand** (the number whose square root we are trying to compute) and a value for the guess. If the guess is good enough for our purposes, we are done; if not, we must repeat the process with an improved guess.
 
 ```scheme
 (define (sqrt-iter guess x)
