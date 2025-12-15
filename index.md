@@ -4,6 +4,9 @@ I'm a Computer Science student, and this is my personal space to share what I'm 
 
 Welcome, and feel free to browse, learn, or even reach out!
 
+**This blog is a public notebook.**
+**I write while learning, not after mastering the topic.**
+
 
 
 # Sections
