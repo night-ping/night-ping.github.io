@@ -270,12 +270,10 @@ it's good to know that computer science is concerned with imperative knowledge *
 example: square root procedure :
 
 - what is ? -> 
-
-$$
-\sqrt{x} = \{ y \mid y \ge 0,\quad y^2 = x\} 
-$$
-
-is describes a perfectly legitimate mathematical function. On the other hand, the definition does not describe a procedure.
+  
+  ![](/home/nightping/techBlog/assets/sqrt.png)
+  
+  is describes a perfectly legitimate mathematical function. On the other hand, the definition does not describe a procedure.
 
 - how to ? -> 
   
