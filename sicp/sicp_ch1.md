@@ -219,15 +219,15 @@ it's good to know that computer science is concerned with imperative knowledge *
 example: square root procedure :
 
 - what is ? -> 
-
+  
   ![](../assets/sqrt.png)
-
+  
   is describes a perfectly legitimate mathematical function. On the other hand, the definition does not describe a procedure.
 
 - how to ? -> 
   
   the most common way is to use Newton’s method of successive approximations, which says that whenever we have a guess y for the value of the square root of a number x , we can perform a simple manipulation to get a beer guess (one closer to the actual square root) by averaging y with x/y.
-
+  
   Now let’s formalize the process in terms of procedures. We start with a value for the **radicand** (the number whose square root we are trying to compute) and a value for the guess. If the guess is good enough for our purposes, we are done; if not, we must repeat the process with an improved guess.
 
 ```scheme
@@ -285,8 +285,6 @@ in this situation we **don't have to pass** `x` to internal procedures definitio
 (sqrt-iter 1.0))
 ```
 
-
-
 ---
 
 ## Procedures and Processes They Generate
@@ -295,15 +293,9 @@ After know the basics in previous section , This section different alittle .. th
 
 The author said that A procedure does not describe a computation all at once. Instead, it defines the rules for how a computation evolves step by step, where each stage of the process is constructed from the result of the previous one.
 
-
-
 I Think this mean looking to the procedure not enough to visualize how the running process looks like , if we need to know what it look like we try to visualize the whole process not a specific description of one stage 
 
-
-
 This section have many examples i can take two of them here .. and the rest for reading 
-
-
 
 ### 1.2.1 Linear Recursion and Linear Iteration
 
@@ -320,8 +312,6 @@ the example here is to compute **Factorial of a number**
 ![](../assets/Recursion_factorial.png)
 
 the Process looks like this there're **deferred operations** make a chain until the evaluation reachs base case , this what makes a recursion process looks like this.
-
-
 
 we can take a different prespective on computing factorials since it about multiplication numbers in order way we can first multiply 1 by 2 , then multiply the result by 3 then by 4 and so on until we reach `n`. we maintain a running product here by catch its value each time and update the counter by adding 1
 
@@ -344,21 +334,13 @@ first shape looks like a long chain of multiplications , and this what a true re
 
 by contrast, the second process doesn't grow and shrink, at each step we able to keep track of values we need to continue the process to **no need** to let some deferred operations on a **waiting list** . these variables `product` and `counter` called **state variables** they update each iteration 
 
-
-
 we can see the difference between them in another way. in iterative case if we stopped the process at any point we can continue normally later on , since there're state variable maintain the state we ready to continue from. not so with recursive process In this case there's some hidden information maintained by the interpreter "the deferred operations" if the chain broke we will need to start it from the beginning 
 
-
-
 another thing to consider to not get confuse between **recursive process and recursive procedure** as we see in iterative process the code looks like the function call itself in recursive way but that a fake recursive there's no deferred operation will build a chain . when we speak about recursive process we meant by that the evolution of the whole process will give a shape of recursive 
-
-
 
 ### 1.2.2 Tree Recursion
 
 this type of recursion at each step it split like a tree into more than one smaller process 
-
-
 
 the recursive solution : 
 
@@ -385,46 +367,172 @@ the iterative solution :
 
 >  there's more than these two examples in the book you can read .
 
+---
+
+## 1.3 Formulating Abstractions with Higher-Order Procedures
+
+In the early part of the chapter, abstraction is achieved by naming common numeric patterns, such as squaring or cubing a number. This section goes further by abstracting over the operations themselves, allowing procedures to accept other procedures as arguments. This shift lets us express general computational patterns, not just specific calculations. **This idea confusing me little but i'll try to understand it well**
+
+```scheme
+; this abstract the compound operation of cubing behind name cube
+(define (cube x) (* x x x)) 
+```
+
+what's new is when we want to **express such patterns as concepts** despite what operation will happen, we need to construct a procedure accept procedures as argument or return procedure as values 
+
+procedure that manipulate other proceduers called **higher-order procedures** this section shows how higher-order procedures can serve as powerful abstraction 
+
+### 1.3.1 Proceduers as Arguments
+
+```scheme
+(define (sum-integers a b)
+    (if (> a b)
+        0
+        (+ a (sum-integers (+ a 1) b))))
+
+
+(define (sum-cubes a b)
+    (if (> a b)
+        0
+        (+ (cube a) (sum-cubes (+ a 1) b))))
+
+(define (pi-sum a b)
+    (if (> a b)
+        0
+        (+ (/ 1.0 (* a (+ a 2)))
+           (pi-sum (+ a 4) b))))
+
+;there a common pattern shared here : 
+(define (<name> a b)
+        (if (> a b)
+            0
+            (+ (<term> a)
+               (<name> (<next> a) b))))
+```
+
+the presence of such a common pattern is strong evidence that there is a useful abstraction waiting to be brought to the surface. in our example its **summation** of a series 
+
+we would like to have powerful language enough to write a procedure that expresses the **concept of summation itself rather than only producre that compute particular sums**
 
 
 
+```scheme
+(define (sum term a next b)
+    (if (> a b)
+        0
+        (+ (term a)
+           (sum term (next a) next b))))
+```
+
+sum here takes as it's arguments the lower and upper bounds a and b with procedures term and next which can be any procedure we want 
 
 
 
+### 1.3.2 Constructing Procedures Using `lambda`
+
+Eariler, we had higher-order procedure like sum take other procedures as arguments sometimes these procedures are used only once descriping one specific expression have no meaning outside this calculation so it's feels noisy to define for each of them a procedure with name .. the solution is to make a procedure without name anonymous procedure using lambda
+
+`(lambda (x) (+ x 4)` a procedure that takes `x` and return `x + 4`
+
+lambda create procedure not execute it. 
 
 
 
+we can call lambda :
+
+```scheme
+((lambda (x y z) (+ x y (square z))) 
+    1 2 3)
+```
+
+we can use `let` to have some variables 
+
+```scheme
+(let ((var1 exp1)
+      (var2 exp2)
+      ...
+      (varn expn))
+  body)
+
+```
+
+`let` is just clearer syntax of `lambda`.
 
 
 
+### 1.3.3 Procedures as General Methods
+
+Earlier : Procedures abstract numbers
+
+Now: Procedures abstract methods of computation
+
+we are no longer writing how to compute this function , we are writing how to solve any problem of this kind 
 
 
 
+Think of integration , root finding , fixed point finding all of these concept the procedure not care what function you give it. 
 
 
 
+take example Fixed point of functions : a number `x` is fixed point of `f` if: 
+
+`f(x) = x` , simply if the values stop changing so fixed point found . 
 
 
 
+```scheme
+(define tolerance 0.00001)
+
+(define (fixed-point f first-guess)
+    (define (close-enough? v1 v2)
+        (< (abs (- v1 v2)) tolerance))
+
+    (define (try guess)
+        (let ((next (f guess)))
+            (if (close-enough? guess next)
+                next
+                (try next))))
+    (try first-guess)
+```
+
+we can use this general function in finding square root which `y = x / y` 
+
+```scheme
+;first try 
+(define (sqrt x)
+    (fixed-point (lambda (y) (/ x y)) 1.0))
+; it failed becuce guess jump between y and x/y infinite oscillation
+
+
+;fix : average damping 
+; y -> (y + x / y) / 2
+
+;second try 
+(define (sqrt x)
+    (fixed-point (lambda (y) (average y (/ x y))) 1.0))
+```
+
+in short, the big idea of this section : We can write programs that capture *general problem-solving strategies* (like root-finding or iteration), and then reuse them for many different problems by passing functions as arguments.
 
 
 
+### 1.3.4 Procedures as Returned Values
 
+after see procedures pass as arguments we can also return a procedure as value
 
+we can express the idea of average damping like this : 
 
+```scheme
+(define (average-damp f)
+    (lambda (x) (average x (f x))))
+```
 
+average-damp is a procedure that takes as it argument procedure f and returns as its value a procedure that, when applied to a number x, produces the average of x and (f x) . 
 
+` ((average-damp square) 10)` = 55 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+```scheme
+(define (sqrt x)
+    (fixed-point (average-damp (lambda (y) (/ x y)))
+                    1.0))
+```
