@@ -1,7 +1,5 @@
 # Building Abstraction with Procedures
 
-
-
 This book does not talk about computer science in the usual way.
 Sometimes, it feels like it is talking about magic.
 
@@ -27,12 +25,8 @@ but *what it should do* and *how it should behave*.
 From this point of view, programming feels less like engineering
 and more like controlled magic.
 
-
-
 This perspective may sound funny, **but it completely changed
 how I think about programs and processes.**
-
-
 
 ---
 
@@ -52,18 +46,12 @@ and it gives us the **elements** of a programming language make it powerful:
 
 these are the building blocks we have in a powerful language. 
 
-
-
 Another interesting idea is the distinction between data and procedures.
 Data is the “stuff” we want to manipulate.
 Procedures are the rules that describe how to manipulate that stuff.
 
-
-
 At this point in the book, they look like two different worlds.
 But the authors hint that this **separation is not as real as it seems.**
-
-
 
 ### 1.1.1 Expressions
 
@@ -83,8 +71,6 @@ no "print" command , no ceremony. just an expression and its value.
 
 typing a number like `486` returns `486` a number is a valid expression. it doesn't do anything - it simply evaluates to itself.
 
-
-
 things get more interesting when expressions are combined. when writing:
 
 ```scheme
@@ -92,8 +78,6 @@ things get more interesting when expressions are combined. when writing:
 ```
 
 i'm no longer dealing with a number , but with a combination of expressions , the interpreter evaluate each part then applies the procedure of the operator to produce the results
-
-
 
 the notation of combination by making operator first called **prefix notation** it fell unnatural first but there's no ambiguity the operator come always in the first and everything else belongs inside the parentheses this make it easy to extend the expression be make it nested 
 
@@ -103,11 +87,7 @@ the notation of combination by making operator first called **prefix notation** 
 
 there's no limit for this nesting and the interpreter has no problem with that , it's we humans who get confused. 
 
-
-
 we can use pretty-printing formatting by use indentations in a smart way to aid us understanding the combination. 
-
-
 
 no matter how complex the expression is the interpreter always follows the same rhythm: 
 
@@ -121,8 +101,6 @@ no matter how complex the expression is the interpreter always follows the same 
 
 this simple loop called - read, eval, print loop 
 
-
-
 ### 1.1.2 Naming and Environment
 
 **giving names to things** is our next ability in programming 
@@ -133,11 +111,7 @@ we use define to did this naming - `(define size 2)` , after this line the inter
 
 we can use it in expressions - `(* 5 size)` , this sound trivial but it introduces **abstraction**
 
-
-
 `define` is simplest abstraction mechanism in the language . instead of repeating compuation every time .we can give it a name and treat it as a **unit**.
-
-
 
 ```scheme
 (define pi 3.14159)
@@ -166,10 +140,6 @@ circumference
 
 this abstraction in action : **hiding complexity behind a name** 
 
-
-
-
-
 for names to work , the interpreter must remember them, that memory is called the **environment** . 
 
 the environment stores: **name -> value associations**
@@ -178,11 +148,7 @@ When we type `size`, the interpreter looks it up in the environment
 
 Without the environment, symbols, names and even built-in operators like `+` would have no meaning.
 
-
-
 abstraction isn't for styling and convenience, it is a way of thinking , using names or any other abstaction strategy is for moving from just writing instruction to a machine to more like **building a conceptual system**
-
-
 
 ### 1.1.3 Evaluating Combinations
 
@@ -191,7 +157,6 @@ even interpreter itself follow a procedure when evaluating something.
 imagine combination like this 
 
 ```scheme
-
 (* (+ 2 (* 4 6))
    (+ 3 5 7))
 ```
@@ -208,8 +173,6 @@ imagine combination like this
   
   - `(* 26 15)` 
 
-
-
 evaluating recursion reach its base cases : 
 
 - numbers -> evaluate to themselves
@@ -218,15 +181,11 @@ evaluating recursion reach its base cases :
 
 - names/variable -> evaluate to whatever object they are bound to in the environment 
 
-
-
 Not everything in parentheses is combination follow same procedure , there's **special forms** like : `(define x 3)`  this isn't evaluate like `(+ x 1)`
 
 define doesn't take arguments in the usual way; its purpose is to **bind a name to a value** 
 
 **each special form has its own evaluate rules.**
-
-
 
 ### 1.1.4 Compound Procedures
 
@@ -238,17 +197,11 @@ for first example , we can express the idea of **squaring** which says , to squa
 
 ```scheme
 (define (square x) (* x x))
-
-
 ```
 
 here we created a compound procedure called `square` and `x` is a local name stand for whatever number the user will pass. and the body of a procedure which is a compound expression multiplies `x` by itself. 
 
-
-
 now we can use this procedure with no need to remember its details each time, because its packaged neatly in a name
-
-
 
 compound procedures can be used as a building blocks for other procedures
 
@@ -257,11 +210,7 @@ compound procedures can be used as a building blocks for other procedures
     (+ (square x) (square y)))
 ```
 
-
-
 > for sections 1.1.5 - 1.1.6 i think it's better to read them from the book 
-
-
 
 ### 1.1.7 Example: Square Roots by Newton's Method
 
@@ -270,19 +219,15 @@ it's good to know that computer science is concerned with imperative knowledge *
 example: square root procedure :
 
 - what is ? -> 
-  
-  
-  
+
   ![](../assets/sqrt.png)
-  
+
   is describes a perfectly legitimate mathematical function. On the other hand, the definition does not describe a procedure.
 
 - how to ? -> 
   
   the most common way is to use Newton’s method of successive approximations, which says that whenever we have a guess y for the value of the square root of a number x , we can perform a simple manipulation to get a beer guess (one closer to the actual square root) by averaging y with x/y.
-  
-  
-  
+
   Now let’s formalize the process in terms of procedures. We start with a value for the **radicand** (the number whose square root we are trying to compute) and a value for the guess. If the guess is good enough for our purposes, we are done; if not, we must repeat the process with an improved guess.
 
 ```scheme
@@ -319,15 +264,9 @@ the decomposition of a big problem not a random splitting , we split it to have 
 
 when we define some procedure in terms of another one we able to regard this other procedure as a **black-box** and what i mean by that is to not care at this point how this compute its result , but rather care of what it compute .. **we suppressed details to considered at a later time and that called procedure abstraction it a very strong idea when thinking**
 
-
-
 in previous example we need to build a `sqrt` procedure and we find it consist of cluster of other procedures so we define each of them . but the issue here is the only procedure for actual user using is `sqrt` others is just helpers but they clutter the global namespace , this will brings a trouble if there's another procedure use same helper names with different implementation details , they will conflict .
 
-
-
 the solution we can hide the procedure of helpers inside `sqrt` these internal procedures only visible inside `sqrt` procedure not outside 
-
-
 
 This is called **block structure**: defining functions inside other functions.
 
@@ -345,6 +284,146 @@ in this situation we **don't have to pass** `x` to internal procedures definitio
             (sqrt-iter (improve guess))))
 (sqrt-iter 1.0))
 ```
+
+
+
+---
+
+## Procedures and Processes They Generate
+
+After know the basics in previous section , This section different alittle .. this section try to show the **overall behavior of a process** 
+
+The author said that A procedure does not describe a computation all at once. Instead, it defines the rules for how a computation evolves step by step, where each stage of the process is constructed from the result of the previous one.
+
+
+
+I Think this mean looking to the procedure not enough to visualize how the running process looks like , if we need to know what it look like we try to visualize the whole process not a specific description of one stage 
+
+
+
+This section have many examples i can take two of them here .. and the rest for reading 
+
+
+
+### 1.2.1 Linear Recursion and Linear Iteration
+
+the example here is to compute **Factorial of a number** 
+
+```scheme
+; recursive procedure will generate recursive process
+(define (factorial n)
+    (if (= n 1)
+        1
+        (* n (factorial (- n 1)))))
+```
+
+![](../assets/Recursion_factorial.png)
+
+the Process looks like this there're **deferred operations** make a chain until the evaluation reachs base case , this what makes a recursion process looks like this.
+
+
+
+we can take a different prespective on computing factorials since it about multiplication numbers in order way we can first multiply 1 by 2 , then multiply the result by 3 then by 4 and so on until we reach `n`. we maintain a running product here by catch its value each time and update the counter by adding 1
+
+`product = counter * product` and `counter = counter + 1` 
+
+![](../assets/Iteration_factorial.png)
+
+```scheme
+(define (factorial n)
+    (fact-iter 1 1 n))
+(define (fact-iter product counter max-count)
+    (if (> counter max-count)
+        product
+        (fact-iter (* counter product)
+                   (+ counter 1)
+                   max-count)))
+```
+
+first shape looks like a long chain of multiplications , and this what a true recursive process look like the intetrpreter need to keep track of the operations to be perform later on. as n goes bigger the chain goes bigger and this take **more space** acutally **O(n)** space
+
+by contrast, the second process doesn't grow and shrink, at each step we able to keep track of values we need to continue the process to **no need** to let some deferred operations on a **waiting list** . these variables `product` and `counter` called **state variables** they update each iteration 
+
+
+
+we can see the difference between them in another way. in iterative case if we stopped the process at any point we can continue normally later on , since there're state variable maintain the state we ready to continue from. not so with recursive process In this case there's some hidden information maintained by the interpreter "the deferred operations" if the chain broke we will need to start it from the beginning 
+
+
+
+another thing to consider to not get confuse between **recursive process and recursive procedure** as we see in iterative process the code looks like the function call itself in recursive way but that a fake recursive there's no deferred operation will build a chain . when we speak about recursive process we meant by that the evolution of the whole process will give a shape of recursive 
+
+
+
+### 1.2.2 Tree Recursion
+
+this type of recursion at each step it split like a tree into more than one smaller process 
+
+
+
+the recursive solution : 
+
+```scheme
+(define (fib n)
+    (cond ((= n 0) 0)
+          ((= n 1) 1)
+          (else (+ (fib (- n 1))
+                   (fib (- n 2))))))
+```
+
+it goes exponentially which it terrible 
+
+the iterative solution :
+
+```scheme
+(define (fib n))
+    (fib-iter 1 0 n))
+(define (fib-iter a b count)
+    (if (= count 0)
+        b
+        (fib-iter (+ a b) a (- count 1))))
+```
+
+>  there's more than these two examples in the book you can read .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
